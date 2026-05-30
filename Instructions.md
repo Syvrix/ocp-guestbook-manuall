@@ -32,22 +32,31 @@ check listening ports
 ```
 rebuild frontend
 ```bash  
-    podman stop frontend-guestbook
-    podman rm frontend-guestbook
-    podman build -t frontend-guestbook .\frontend\
-    podman run -d --name frontend-guestbook -p 127.0.0.1:8081:8080 frontend-guestbook
+podman stop frontend-guestbook
+podman rm frontend-guestbook
+podman build -t frontend-guestbook .\frontend\
+podman run -d --name frontend-guestbook -p 127.0.0.1:8081:8080 frontend-guestbook
 ```
 Build whole project
  ```bash   
-    podman build -t postgres-guestbook .\postgresql\
-    podman build -t redis-guestbook .\redis\
-    podman build -t backend-guestbook .\backend\
-    podman build -t frontend-guestbook .\frontend\
+podman build -t postgres-guestbook .\postgresql\
+podman build -t redis-guestbook .\redis\
+podman build -t backend-guestbook .\backend\
+podman build -t frontend-guestbook .\frontend\
 ```
 Run all pods
  ```bash  
- podman run -d --name postgres -p 5432:5432 postgres-guestbook
- podman run -d --name redis -p 6379:6379 redis-guestbook
- podman run -d --name backend-guestbook -p 8080:8080 backend-guestbook
+podman run -d --name postgres -p 5432:5432 postgres-guestbook
+podman run -d --name redis -p 6379:6379 redis-guestbook
+podman run -d --name backend-guestbook -p 8080:8080 `
+  -e DB_HOST=host.containers.internal `
+  -e DB_PORT=5432 `
+  -e DB_USER=guestbook `
+  -e DB_PASSWORD=password `
+  -e DB_NAME=guestbook `
+  -e REDIS_HOST=host.containers.internal `
+  -e REDIS_PORT=6379 `
+  -e REDIS_PASSWORD=redis `
+  backend-guestbook
  podman run -d --name frontend-guestbook -p 127.0.0.1:8081:8080 frontend-guestbook
  ```
