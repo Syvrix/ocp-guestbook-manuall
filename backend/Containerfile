@@ -1,14 +1,12 @@
+# build the application using the Go toolset image
 FROM registry.access.redhat.com/ubi10/go-toolset:10.0 AS builder
-
-WORKDIR /src
-COPY go.mod go.sum ./
-RUN go mod download
+WORKDIR /app
 COPY . .
-RUN GOFLAGS="-mod=mod" GOOS=linux GOARCH=amd64 go build -o /guestbook-api .
+RUN go mod tidy && go build -o guestbook-api .
 
+# run
 FROM registry.access.redhat.com/ubi10-minimal:10.0
-COPY --from=builder /guestbook-api /usr/local/bin/guestbook-api
-
+WORKDIR /app
+COPY --from=builder /app/guestbook-api .
 EXPOSE 8080
-USER 1001
-ENTRYPOINT ["/usr/local/bin/guestbook-api"]
+CMD ["./guestbook-api"]
