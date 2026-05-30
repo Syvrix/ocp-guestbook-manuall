@@ -1,0 +1,4 @@
+FROM quay.io/kurs/redis:latest
+ENV REDIS_PASSWORD=redis
+VOLUME ["/var/lib/redis/data"]
+EXPOSE 6379
