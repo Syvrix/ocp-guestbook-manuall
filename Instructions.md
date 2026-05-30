@@ -22,6 +22,8 @@
         podman run -d --name frontend-guestbook -p 127.0.0.1:8081:8080 frontend-guestbook
 
 OBS! has to hardcode the url to 127.0.0.1 or the connection wont resolve for some reason.
+3. Surf to 127.0.0.1:8081 and check it works.
+4. im using ghcr.io for the workflow because its OCI compliant and  skips creating secrets and uses the github-token that is already in store by github. It also lets us store docker images alongside the github repos as a alternative to docker hub.
 
 ## Fast commands
 check listening ports
