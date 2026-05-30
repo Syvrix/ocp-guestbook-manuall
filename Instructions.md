@@ -19,5 +19,5 @@
     build
         podman build -t frontend-guestbook .\frontend\
     run
-        podman run -d --name frontend-guestbook -p 8080:8080 frontend-guestbook
+        podman run -d --name frontend-guestbook -p 8081:8080 frontend-guestbook
 
