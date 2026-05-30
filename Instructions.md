@@ -19,5 +19,17 @@
     build
         podman build -t frontend-guestbook .\frontend\
     run
-        podman run -d --name frontend-guestbook -p 8081:8080 frontend-guestbook
+        podman run -d --name frontend-guestbook -p 127.0.0.1:8081:8080 frontend-guestbook
+
+OBS! has to hardcode the url to 127.0.0.1 or the connection wont resolve for some reason.
+
+## Fast commands
+check listening ports
+    podman exec frontend-guestbook ss -tlnp
+rebuild frontend
+    podman stop frontend-guestbook
+    podman rm frontend-guestbook
+    podman build -t frontend-guestbook .\frontend\
+    podman run -d --name frontend-guestbook -p 127.0.0.1:8081:8080 frontend-guestbook
+
 
