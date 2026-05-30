@@ -1,11 +1,11 @@
 # build the application using the Go toolset image
-FROM registry.access.redhat.com/ubi10/go-toolset:10.0 AS builder
+FROM golang:1.23 AS builder
 WORKDIR /app
 COPY . .
 RUN go mod tidy && go build -o guestbook-api .
 
 # run
-FROM registry.access.redhat.com/ubi10-minimal:10.0
+FROM golang:1.23-alpine AS runtime
 WORKDIR /app
 COPY --from=builder /app/guestbook-api .
 EXPOSE 8080

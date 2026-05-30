@@ -27,11 +27,27 @@ OBS! has to hardcode the url to 127.0.0.1 or the connection wont resolve for som
 
 ## Fast commands
 check listening ports
-    podman exec frontend-guestbook ss -tlnp
+```bash  
+    podman exec frontend-guestbook ss -tlnp 
+```
 rebuild frontend
+```bash  
     podman stop frontend-guestbook
     podman rm frontend-guestbook
     podman build -t frontend-guestbook .\frontend\
     podman run -d --name frontend-guestbook -p 127.0.0.1:8081:8080 frontend-guestbook
-
-
+```
+Build whole project
+ ```bash   
+    podman build -t postgres-guestbook .\postgresql\
+    podman build -t redis-guestbook .\redis\
+    podman build -t backend-guestbook .\backend\
+    podman build -t frontend-guestbook .\frontend\
+```
+Run all pods
+ ```bash  
+ podman run -d --name postgres -p 5432:5432 postgres-guestbook
+ podman run -d --name redis -p 6379:6379 redis-guestbook
+ podman run -d --name backend-guestbook -p 8080:8080 backend-guestbook
+ podman run -d --name frontend-guestbook -p 127.0.0.1:8081:8080 frontend-guestbook
+ ```
